@@ -1,9 +1,16 @@
 import cv2
+import os
 
-image = cv2.imread('./lot0/fish_00000.png')
+input_folder = "./lot0"
+output_folder = "./lot0_grayscale"
 
-gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+os.makedirs(output_folder, exist_ok=True)
 
-cv2.imshow('Grayscale', gray_image)
-cv2.waitKey(0)  
-cv2.destroyAllWindows()
+for filename in os.listdir(input_folder):
+    if filename.endswith(".png"):
+        image_path = os.path.join(input_folder, filename)
+
+        image = cv2.imread(image_path)
+        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+        cv2.imwrite(os.path.join(output_folder, filename), gray_image)
